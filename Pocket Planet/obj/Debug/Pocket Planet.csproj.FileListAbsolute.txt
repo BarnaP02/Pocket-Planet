@@ -1,0 +1,12 @@
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\bin\Debug\Pocket Planet.exe.config
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\bin\Debug\Pocket Planet.exe
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\bin\Debug\Pocket Planet.pdb
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\obj\Debug\Pocket Planet.csproj.AssemblyReference.cache
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\obj\Debug\Pocket_Planet.Form1.resources
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\obj\Debug\Pocket_Planet.Properties.Resources.resources
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\obj\Debug\Pocket Planet.csproj.GenerateResource.cache
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\obj\Debug\Pocket Planet.csproj.CoreCompileInputs.cache
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\obj\Debug\Pocket Planet.exe
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\obj\Debug\Pocket Planet.pdb
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\obj\Debug\Pocket_Planet.Form2.resources
+D:\--ˇvˇ--\pr0gr4m0z45\Pocket Planet\Pocket Planet\obj\Debug\Pocket_Planet.Form3.resources
