@@ -45,7 +45,7 @@ namespace Pocket_Planet
             // pb_Simulation
             // 
             this.pb_Simulation.BackColor = System.Drawing.Color.Gray;
-            this.pb_Simulation.Location = new System.Drawing.Point(2, 2);
+            this.pb_Simulation.Location = new System.Drawing.Point(-1, 2);
             this.pb_Simulation.Name = "pb_Simulation";
             this.pb_Simulation.Size = new System.Drawing.Size(1290, 750);
             this.pb_Simulation.TabIndex = 0;

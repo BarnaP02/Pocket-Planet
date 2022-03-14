@@ -15,7 +15,7 @@ namespace Pocket_Planet
         int x = 0;
         int y = 0;
         int log = 0;
-        Bitmap temp;
+        //Bitmap temp;
         public string path = "";
         public int messenger2 = 0;
         public Form2()
@@ -32,7 +32,21 @@ namespace Pocket_Planet
             //tmr_paint.Start();
 
             //g = pb_Simulation.CreateGraphics();
+
+
+            bm = new Bitmap(pb_Simulation.Width, pb_Simulation.Height);
+            g = Graphics.FromImage(bm);
+            g.Clear(Color.White);
+            pb_Simulation.Image = bm;
         }
+
+        Bitmap bm;
+        Graphics g;
+        Point px, py;
+        Pen p = new Pen(Color.Black, 1);
+        List<List<int>> HeightMatrix = new List<List<int>>();
+        List<int> tempHM = new List<int>();
+        int index;
 
         private void tmr_Lup_Tick(object sender, EventArgs e)
         {
@@ -55,9 +69,11 @@ namespace Pocket_Planet
                 tmr_Lup.Stop();
                 int grey = 0;
 
-                for (int i = 1; i < newmap.Width; i++)
+                //////ez jo \/
+                
+                for (int i = 1; i < 1290; i++)
                 {
-                    for (int j = 1; j < newmap.Height; j++)
+                    for (int j = 1; j < 750; j++)
                     {
                         x = i;
                         y = j;
@@ -67,34 +83,48 @@ namespace Pocket_Planet
                         grey = (clr.R + clr.G + clr.B) / 3;
                         Color newclr = Color.FromArgb(grey, grey, grey);
                         //((Bitmap)pb_Simulation.Image).SetPixel(x, y, newclr);
+                        //
                         newmap.SetPixel(x, y, newclr);
+                        //
+                        px.X = x;
+                        px.Y = y;
+                        p.Color = newclr;
+                        g.DrawLine(p, px, py);
+                        py = px;
+
                         //pb_Simulation.Refresh();
                         lbl_log.Text = Convert.ToString(x);
                         lbl_log2.Text = Convert.ToString(y);
                         log++;
                     }
+                    pb_Simulation.Refresh();
                 }
                 tmr_Lup.Start();
                 pb_Simulation.Image = newmap;
                 pb_Simulation.Refresh();
+                
+                /////////////////////////////
             }
 
             if (messenger2==1)
             {
                 messenger2 = 2;
                 Bitmap newmap = new Bitmap(pb_Simulation.Image);
+                pb_Simulation.Refresh();
                 int tValue = 0;
                 lbl_log5.Text = Convert.ToString(messenger2);
                 Color clr;
                 Color newclr;
+                int grey=0;
                 tmr_Lup.Stop();
+                /*
                 for (int i = 0; i < 43; i++)
                 {
                     for (int j = 0; j < 25; j++)
                     {
-                        for (int l = 1; l < 30; l++)
+                        for (int l = 0; l < 29; l++)
                         {
-                            for (int k = 1; k < 30; k++)
+                            for (int k = 0; k < 29; k++)
                             {
                                 clr = newmap.GetPixel(30*i + l, 30*j + k);
                                 tValue += clr.R;
@@ -102,22 +132,95 @@ namespace Pocket_Planet
                         }
                         lbl_log4.Text = Convert.ToString(tValue);
                         newclr = Color.FromArgb(tValue/900, tValue / 900, tValue / 900);
-                        for (int l = 1; l < 30; l++)
+                        for (int l = 0; l < 29; l++)
                         {
-                            for (int k = 1; k < 30; k++)
+                            for (int k = 0; k < 29; k++)
                             {
                                 newmap.SetPixel(30*i + l, 30*j + k, newclr);
+                            }
+                        }
+                        tValue = 0;
+                    pb_Simulation.Refresh();
+                    }
+                }
+                */
+
+                ////ez jo \/
+                
+                for (int i = 0; i < 258; i++)
+                {
+                    for (int j = 0; j < 150; j++)
+                    {
+                        for (int l = 0; l < 5; l++)
+                        {
+                            for (int k = 0; k < 5; k++)
+                            {
+                                clr = newmap.GetPixel(5 * i + l, 5 * j + k);
+                                tValue += clr.R;
+                            }
+                        }
+                        lbl_log4.Text = Convert.ToString(tValue);
+                        newclr = Color.FromArgb(tValue / 25, tValue / 25, tValue / 25);
+                        for (int l = 0; l < 5; l++)
+                        {
+                            for (int k = 0; k < 5; k++)
+                            {
+                                newmap.SetPixel(5 * i + l, 5 * j + k, newclr);
                             }
                         }
                         tValue = 0;
                         pb_Simulation.Refresh();
                     }
                 }
+                
+                //////////////////////////////meg nem jo////////////////////ezzel még nem szinezi ki////////////////////de a matrix az elvileg jo//////////bar meg nem biztos//////////////
+                /*
+                for (int i = 0; i < 258; i++)
+                {
+                    for (int j = 0; j < 150; j++)
+                    {
+                        for (int l = 0; l < 5; l++)
+                        {
+                            for (int k = 0; k < 5; k++)
+                            {
+                                x = i;
+                                y = j;
+                                clr = newmap.GetPixel(x, y);
+                                grey = (clr.R + clr.G + clr.B) / 3;
+                                newclr = Color.FromArgb(grey, grey, grey);
+                                //clr = newmap.GetPixel(5 * i + l, 5 * j + k);
+                                tValue += grey;
+                            }
+                        }
+                        lbl_log4.Text = Convert.ToString(tValue);
+                        newclr = Color.FromArgb(tValue / 25, tValue / 25, tValue / 25);
+                        for (int l = 0; l < 5; l++)
+                        {
+                            for (int k = 0; k < 5; k++)
+                            {
+                                px.X = x;
+                                px.Y = y;
+                                p.Color = newclr;
+                                g.DrawLine(p, px, py);
+                                py = px;
+                                //newmap.SetPixel(5 * i + l, 5 * j + k, newclr);
+                                tempHM.Add(grey/25);
+                            }
+                        }
+                        tValue = 0;
+                        HeightMatrix.Add(tempHM);
+                        pb_Simulation.Refresh();
+                    }
+                }
+                lbl_log5.Text = Convert.ToString(HeightMatrix[100][100]);
+                */
                 tmr_Lup.Start();
                 pb_Simulation.Image = newmap;
+                pb_Simulation.Refresh();
             }
 
         }
+
 
         /*private void tmr_paint_Tick(object sender, EventArgs e)
         {
