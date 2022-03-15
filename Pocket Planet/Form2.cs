@@ -46,11 +46,15 @@ namespace Pocket_Planet
         Pen p = new Pen(Color.Black, 1);
         List<List<int>> HeightMatrix = new List<List<int>>();
         List<int> tempHM = new List<int>();
-        int index;
+        //int[,] Matrix = new int[86, 50];     //
+        int[,] Matrix = new int[1250, 750];
+        string[,] Map = new string[1290, 750];
+        int ccount;
+        Random rnd = new Random();
 
         private void tmr_Lup_Tick(object sender, EventArgs e)
         {
-            lbl_log3.Text =Convert.ToString(log);
+            lbl_log3.Text ="log: " + Convert.ToString(log);
             System.Windows.Forms.Form f = System.Windows.Forms.Application.OpenForms["Form1"];
 
             //pb_Simulation.ImageLocation = ((Form1)f).imgpath;
@@ -58,16 +62,19 @@ namespace Pocket_Planet
             if (((Form1)f).messenger==2)//(messenger2==0) //
             {
                 ((Form1)f).messenger = 3;
+                ccount = ((Form1)f).ccount;
                 messenger2 = 1;
                 //((Form1)f).Close();
                 //temp.Width = pb_Simulation.Width;
                 //temp.Height = pb_Simulation.Height;
                 //temp = new Bitmap(pb_Simulation.Image);
                 path = ((Form1)f).imgpath;
+
                 Bitmap newmap = new Bitmap(path,true);
                 //newmap.Width = 1290;
                 tmr_Lup.Stop();
                 int grey = 0;
+                pb_Simulation.Image = newmap;
 
                 //////ez jo \/
                 
@@ -93,8 +100,8 @@ namespace Pocket_Planet
                         py = px;
 
                         //pb_Simulation.Refresh();
-                        lbl_log.Text = Convert.ToString(x);
-                        lbl_log2.Text = Convert.ToString(y);
+                        lbl_log.Text = "X: " + Convert.ToString(x);
+                        lbl_log2.Text = "Y: " + Convert.ToString(y);
                         log++;
                     }
                     pb_Simulation.Refresh();
@@ -112,7 +119,7 @@ namespace Pocket_Planet
                 Bitmap newmap = new Bitmap(pb_Simulation.Image);
                 pb_Simulation.Refresh();
                 int tValue = 0;
-                lbl_log5.Text = Convert.ToString(messenger2);
+                lbl_log5.Text = "messenger2: " + Convert.ToString(messenger2);
                 Color clr;
                 Color newclr;
                 int grey=0;
@@ -146,35 +153,55 @@ namespace Pocket_Planet
                 */
 
                 ////ez jo \/
-                
+                /*
                 for (int i = 0; i < 258; i++)
                 {
                     for (int j = 0; j < 150; j++)
                     {
+                        
                         for (int l = 0; l < 5; l++)
                         {
                             for (int k = 0; k < 5; k++)
                             {
                                 clr = newmap.GetPixel(5 * i + l, 5 * j + k);
                                 tValue += clr.R;
+                                Matrix[i, j] = clr.R;
                             }
                         }
+                        
+                        //////////
+                        /*
+                        clr = newmap.GetPixel(i,j);
+                        tValue += clr.R;
+                        Matrix[i, j] = clr.R;
+                        * /
                         lbl_log4.Text = Convert.ToString(tValue);
                         newclr = Color.FromArgb(tValue / 25, tValue / 25, tValue / 25);
+
                         for (int l = 0; l < 5; l++)
                         {
                             for (int k = 0; k < 5; k++)
                             {
                                 newmap.SetPixel(5 * i + l, 5 * j + k, newclr);
+                                Matrix[i, j] = newclr.R;
+                                Map[i, j] = Convert.ToString(newclr.R);
                             }
                         }
+                        
+                        ////////////
+                        /*
+                        newmap.SetPixel(i,j, newclr);
+                        Matrix[i, j] = newclr.R;
+                        Map[i, j] = Convert.ToString(newclr.R);
+                        * /
                         tValue = 0;
                         pb_Simulation.Refresh();
                     }
-                }
-                
+                }*/
+
                 //////////////////////////////meg nem jo////////////////////ezzel még nem szinezi ki////////////////////de a matrix az elvileg jo//////////bar meg nem biztos//////////////
                 /*
+                pb_Simulation.Image = newmap;
                 for (int i = 0; i < 258; i++)
                 {
                     for (int j = 0; j < 150; j++)
@@ -187,17 +214,20 @@ namespace Pocket_Planet
                                 y = j;
                                 clr = newmap.GetPixel(x, y);
                                 grey = (clr.R + clr.G + clr.B) / 3;
-                                newclr = Color.FromArgb(grey, grey, grey);
+                                //newclr = Color.FromArgb(grey, grey, grey);
                                 //clr = newmap.GetPixel(5 * i + l, 5 * j + k);
                                 tValue += grey;
                             }
                         }
                         lbl_log4.Text = Convert.ToString(tValue);
                         newclr = Color.FromArgb(tValue / 25, tValue / 25, tValue / 25);
+                        lbl_log3.Text = "newclr: (" + Convert.ToString(tValue/25) + "," + Convert.ToString(tValue/25) + "," + Convert.ToString(tValue/25) + ")";
                         for (int l = 0; l < 5; l++)
                         {
                             for (int k = 0; k < 5; k++)
                             {
+                                x = i;
+                                y = j;
                                 px.X = x;
                                 px.Y = y;
                                 p.Color = newclr;
@@ -205,22 +235,152 @@ namespace Pocket_Planet
                                 py = px;
                                 //newmap.SetPixel(5 * i + l, 5 * j + k, newclr);
                                 tempHM.Add(grey/25);
+                                pb_Simulation.Refresh();
                             }
                         }
                         tValue = 0;
                         HeightMatrix.Add(tempHM);
                         pb_Simulation.Refresh();
                     }
+                    if (i==30)
+                    {
+                        //////////////
+                        this.Hide();
+                        //////////////
+                    }
                 }
-                lbl_log5.Text = Convert.ToString(HeightMatrix[100][100]);
+                lbl_log5.Text = "HM: " + Convert.ToString(HeightMatrix[100][100]);
                 */
+                ///////////////////////////////////////////////////////////70 perces cucc vege//////////////////////////
+
+                /*
+                pb_Simulation.Image = newmap;
+                for (int i = 0; i < 86; i++)
+                {
+                    for (int j = 0; j < 50; j++)
+                    {
+                        for (int l = 0; l < 15; l++)
+                        {
+                            for (int k = 0; k < 15; k++)
+                            {
+                                x = i;
+                                y = j;
+                                clr = newmap.GetPixel(x, y);
+                                grey = (clr.R + clr.G + clr.B) / 3;
+                                //newclr = Color.FromArgb(grey, grey, grey);
+                                //clr = newmap.GetPixel(5 * i + l, 5 * j + k);
+                                tValue += grey;
+                            }
+                        }
+                        lbl_log4.Text = Convert.ToString(tValue);
+                        newclr = Color.FromArgb(tValue / 225, tValue / 225, tValue / 225);
+                        lbl_log3.Text = "newclr: (" + Convert.ToString(tValue / 225) + "," + Convert.ToString(tValue / 225) + "," + Convert.ToString(tValue / 225) + ")";
+                        for (int l = 0; l < 15; l++)
+                        {
+                            for (int k = 0; k < 15; k++)
+                            {
+                                x = i;
+                                y = j;
+                                px.X = x;
+                                px.Y = y;
+                                p.Color = newclr;
+                                g.DrawLine(p, px, py);
+                                py = px;
+                                //newmap.SetPixel(5 * i + l, 5 * j + k, newclr);
+                                //tempHM.Add(grey / 25);
+                                Matrix[i,j] = grey / 225;
+                                pb_Simulation.Image = newmap;
+                                pb_Simulation.Refresh();
+                            }
+                        }
+                        tValue = 0;
+                        //HeightMatrix.Add(tempHM);
+                        pb_Simulation.Refresh();
+                    }
+                    if (i == 5)
+                    {
+                        //////////////
+                        //this.Hide();
+                        //////////////
+                    }
+                }
+                lbl_log5.Text = "HM: " + Convert.ToString(Matrix[50,25]);
+
                 tmr_Lup.Start();
                 pb_Simulation.Image = newmap;
                 pb_Simulation.Refresh();
+            */
+                lbl_log4.Text = "Map[50, 25]: " + Convert.ToString(Matrix[50, 25]);
+                lbl_log5.Text = "HM: " + Convert.ToString(Matrix[50, 25]);
+                string checker="";
+                int cx = 0;
+                int cy = 0;
+                for (int i = 0; i < ccount; i++)
+                {
+                    cx = rnd.Next(1, 1291);
+                    cy = rnd.Next(1, 750);
+                    Map[cx, cy] = Convert.ToString(i + 3) + Convert.ToString(i + 3);
+                    //checker += $"Map[{cx},{cy}]: {Map[cx, cy]} \t";
+                    checker += $"{cx} ";
+                }
+                checker += $"Map[{cx},{cy}]: {Map[cx, cy]}";
+                lbl_log5.Text = checker;
+                lbl_log4.Text = "W " + Convert.ToString(pb_Simulation.Width);
+                lbl_log5.Text = "H " + Convert.ToString(pb_Simulation.Height);
+                RefreshTheMap();
             }
-
         }
+        public void RefreshTheMap()
+        {
+            Color refrclr = Color.FromArgb(0, 0, 0);
+            for (int i = 1; i < pb_Simulation.Width-1; i++)
+            {
+                for (int j = 1; j < pb_Simulation.Height-1; j++)
+                {
+                    if (Map[i,j]==Convert.ToString(-1))
+                    {
+                        refrclr = Color.FromArgb(0,0,0);
+                    }
+                    else if (Map[i, j] == Convert.ToString(33))
+                    {
+                        refrclr = Color.FromArgb(255, 0, 0);
+                    }
+                    else if (Map[i, j] == Convert.ToString(44))
+                    {
+                        refrclr = Color.FromArgb(0, 255, 0);
+                    }
+                    else if (Map[i, j] == Convert.ToString(55))
+                    {
+                        refrclr = Color.FromArgb(0, 0, 255);
+                    }
+                    else if (Map[i, j] == Convert.ToString(66))
+                    {
+                        refrclr = Color.FromArgb(255, 255, 0);
+                    }
+                    else if (Map[i, j] == Convert.ToString(77))
+                    {
+                        refrclr = Color.FromArgb(0, 255, 255);
+                    }
+                    else if (Map[i, j] == Convert.ToString(88))
+                    {
+                        refrclr = Color.FromArgb(255, 0, 255);
+                    }
+                    else if (Map[i, j] == Convert.ToString(99))
+                    {
 
+                    }
+                    x = i;
+                    y = j;
+                    px.X = x;
+                    px.Y = y;
+                    p.Color = refrclr;
+                    g.DrawLine(p, px, py);
+                    py = px;
+
+                }
+            }
+            pb_Simulation.Refresh();
+        }
 
         /*private void tmr_paint_Tick(object sender, EventArgs e)
         {

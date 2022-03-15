@@ -152,6 +152,7 @@ namespace Pocket_Planet
             }
             messenger = 2;
             this.Hide();
+            to2.Hide();
 
         }
 
