@@ -39,13 +39,14 @@ namespace Pocket_Planet
             this.lbl_log3 = new System.Windows.Forms.Label();
             this.lbl_log4 = new System.Windows.Forms.Label();
             this.lbl_log5 = new System.Windows.Forms.Label();
+            this.lbl_log6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Simulation)).BeginInit();
             this.SuspendLayout();
             // 
             // pb_Simulation
             // 
             this.pb_Simulation.BackColor = System.Drawing.Color.Gray;
-            this.pb_Simulation.Location = new System.Drawing.Point(-1, 2);
+            this.pb_Simulation.Location = new System.Drawing.Point(0, 2);
             this.pb_Simulation.Name = "pb_Simulation";
             this.pb_Simulation.Size = new System.Drawing.Size(1290, 750);
             this.pb_Simulation.TabIndex = 0;
@@ -106,12 +107,23 @@ namespace Pocket_Planet
             this.lbl_log5.TabIndex = 5;
             this.lbl_log5.Text = "label1";
             // 
+            // lbl_log6
+            // 
+            this.lbl_log6.AutoSize = true;
+            this.lbl_log6.ForeColor = System.Drawing.Color.Yellow;
+            this.lbl_log6.Location = new System.Drawing.Point(1350, 412);
+            this.lbl_log6.Name = "lbl_log6";
+            this.lbl_log6.Size = new System.Drawing.Size(55, 13);
+            this.lbl_log6.TabIndex = 6;
+            this.lbl_log6.Text = "label1";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1584, 755);
+            this.Controls.Add(this.lbl_log6);
             this.Controls.Add(this.lbl_log5);
             this.Controls.Add(this.lbl_log4);
             this.Controls.Add(this.lbl_log3);
@@ -142,5 +154,6 @@ namespace Pocket_Planet
         private System.Windows.Forms.Label lbl_log3;
         private System.Windows.Forms.Label lbl_log4;
         private System.Windows.Forms.Label lbl_log5;
+        private System.Windows.Forms.Label lbl_log6;
     }
 }

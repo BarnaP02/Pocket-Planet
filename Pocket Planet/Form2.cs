@@ -47,10 +47,11 @@ namespace Pocket_Planet
         List<List<int>> HeightMatrix = new List<List<int>>();
         List<int> tempHM = new List<int>();
         //int[,] Matrix = new int[86, 50];     //
-        int[,] Matrix = new int[1250, 750];
+        int[,] Matrix = new int[1290, 750];
         string[,] Map = new string[1290, 750];
         int ccount;
         Random rnd = new Random();
+        Bitmap newmap;
 
         private void tmr_Lup_Tick(object sender, EventArgs e)
         {
@@ -78,9 +79,9 @@ namespace Pocket_Planet
 
                 //////ez jo \/
                 
-                for (int i = 1; i < 1290; i++)
+                for (int i = 0; i < 1290; i++)
                 {
-                    for (int j = 1; j < 750; j++)
+                    for (int j = 0; j < 750; j++)
                     {
                         x = i;
                         y = j;
@@ -116,7 +117,7 @@ namespace Pocket_Planet
             if (messenger2==1)
             {
                 messenger2 = 2;
-                Bitmap newmap = new Bitmap(pb_Simulation.Image);
+                newmap = new Bitmap(pb_Simulation.Image);
                 pb_Simulation.Refresh();
                 int tValue = 0;
                 lbl_log5.Text = "messenger2: " + Convert.ToString(messenger2);
@@ -153,19 +154,24 @@ namespace Pocket_Planet
                 */
 
                 ////ez jo \/
-                /*
-                for (int i = 0; i < 258; i++)
+                
+                for (int i = 0; i < 1290; i++) // (int i = 0; i < 258; i++)
                 {
-                    for (int j = 0; j < 150; j++)
-                    {
-                        
-                        for (int l = 0; l < 5; l++)
+                    for (int j = 0; j < 750; j++)  // (int j = 0; j < 150; j++)
+                    {                        
+                        //for (int l = 0; l < 5; l++)
                         {
-                            for (int k = 0; k < 5; k++)
+                            //for (int k = 0; k < 5; k++)
                             {
-                                clr = newmap.GetPixel(5 * i + l, 5 * j + k);
+                                clr = newmap.GetPixel(i, j); // newmap.GetPixel(5 * i + l, 5 * j + k);
                                 tValue += clr.R;
-                                Matrix[i, j] = clr.R;
+                                Matrix[i, j] = clr.R; // Matrix[5 * i + l, 5 * j + k] = clr.R/25;
+                                Map[i, j] = Convert.ToString(clr.R/25); // Map[5 * i + l, 5 * j + k] = Convert.ToString(clr.R/25);
+                                int test = int.Parse(Map[i, j]); // int.Parse(Map[5 * i + l, 5 * j + k]);
+                                if (test < 6)
+                                {
+                                    Map[i, j] = "-1"; // Map[5 * i + l, 5 * j + k] = "-1"; 
+                                }
                             }
                         }
                         
@@ -193,12 +199,13 @@ namespace Pocket_Planet
                         newmap.SetPixel(i,j, newclr);
                         Matrix[i, j] = newclr.R;
                         Map[i, j] = Convert.ToString(newclr.R);
-                        * /
+                        */
                         tValue = 0;
                         pb_Simulation.Refresh();
                     }
-                }*/
-
+                    //pb_Simulation.Image = newmap;
+                }
+                // * /
                 //////////////////////////////meg nem jo////////////////////ezzel még nem szinezi ki////////////////////de a matrix az elvileg jo//////////bar meg nem biztos//////////////
                 /*
                 pb_Simulation.Image = newmap;
@@ -319,67 +326,192 @@ namespace Pocket_Planet
                 {
                     cx = rnd.Next(1, 1291);
                     cy = rnd.Next(1, 750);
-                    Map[cx, cy] = Convert.ToString(i + 3) + Convert.ToString(i + 3);
+                    Map[cx, cy] = Convert.ToString(i + 4) + Convert.ToString(i + 4);
                     //checker += $"Map[{cx},{cy}]: {Map[cx, cy]} \t";
                     checker += $"{cx} ";
                 }
-                checker += $"Map[{cx},{cy}]: {Map[cx, cy]}";
-                lbl_log5.Text = checker;
                 lbl_log4.Text = "W " + Convert.ToString(pb_Simulation.Width);
                 lbl_log5.Text = "H " + Convert.ToString(pb_Simulation.Height);
+                checker += $"Map[{cx},{cy}]: {Map[cx, cy]}";
+                lbl_log5.Text = checker;
+                lbl_log6.Text = $"Map[{3},{3}]: {Map[3, 3]}";
                 RefreshTheMap();
+                //RefreshTheMap2();
             }
         }
-        public void RefreshTheMap()
+        public void RefreshTheMap() //csak a képet frissiti a terkep alapjan
         {
             Color refrclr = Color.FromArgb(0, 0, 0);
             for (int i = 1; i < pb_Simulation.Width-1; i++)
             {
                 for (int j = 1; j < pb_Simulation.Height-1; j++)
                 {
-                    if (Map[i,j]==Convert.ToString(-1))
+                    if (Map[i, j] == "-1") 
                     {
                         refrclr = Color.FromArgb(0,0,0);
                     }
-                    else if (Map[i, j] == Convert.ToString(33))
+                    else if (Map[i, j] == "44")
                     {
                         refrclr = Color.FromArgb(255, 0, 0);
                     }
-                    else if (Map[i, j] == Convert.ToString(44))
+                    else if (Map[i, j] == "55")
                     {
                         refrclr = Color.FromArgb(0, 255, 0);
                     }
-                    else if (Map[i, j] == Convert.ToString(55))
+                    else if (Map[i, j] == "66")
                     {
                         refrclr = Color.FromArgb(0, 0, 255);
                     }
-                    else if (Map[i, j] == Convert.ToString(66))
+                    else if (Map[i, j] == "77")
                     {
                         refrclr = Color.FromArgb(255, 255, 0);
                     }
-                    else if (Map[i, j] == Convert.ToString(77))
+                    else if (Map[i, j] == "88")
                     {
                         refrclr = Color.FromArgb(0, 255, 255);
                     }
-                    else if (Map[i, j] == Convert.ToString(88))
+                    else if (Map[i, j] == "99") //Convert.ToString(88))
                     {
                         refrclr = Color.FromArgb(255, 0, 255);
                     }
-                    else if (Map[i, j] == Convert.ToString(99))
+                    else //if (Map[i, j] == Convert.ToString(99))
                     {
-
+                        refrclr = newmap.GetPixel(i,j);
                     }
                     x = i;
                     y = j;
                     px.X = x;
                     px.Y = y;
                     p.Color = refrclr;
-                    g.DrawLine(p, px, py);
+                    //g.DrawLine(p, px, py);
+                    newmap.SetPixel(i, j, refrclr);
                     py = px;
+                    pb_Simulation.Image = newmap;
 
                 }
             }
             pb_Simulation.Refresh();
+            lbl_log6.Text += " donezo";
+            lbl_log6.Text += Convert.ToString(Map[3, 4]);
+        }
+        public void RefreshTheMap2() //csak a képet frissiti a terkep alapjan
+        {
+            Color refrclr = Color.FromArgb(0, 0, 0);
+            for (int i = 0; i < pb_Simulation.Width - 1; i++)
+            {
+                for (int j = 0; j < pb_Simulation.Height - 1; j++)
+                {
+                            if (Map[i, j] == "-1")
+                            {
+                                refrclr = Color.FromArgb(0, 0, 0);
+                            }
+                            else if (Map[i, j] == "44")
+                            {
+                                refrclr = Color.FromArgb(255, 0, 0);
+                            }
+                            else if (Map[i, j] == "55")
+                            {
+                                refrclr = Color.FromArgb(0, 255, 0);
+                            }
+                            else if (Map[i, j] == "66")
+                            {
+                                refrclr = Color.FromArgb(0, 0, 255);
+                            }
+                            else if (Map[i, j] == "77")
+                            {
+                                refrclr = Color.FromArgb(255, 255, 0);
+                            }
+                            else if (Map[i, j] == "88")
+                            {
+                                refrclr = Color.FromArgb(0, 255, 255);
+                            }
+                            else if (Map[i, j] == "99") //Convert.ToString(88))
+                            {
+                                refrclr = Color.FromArgb(255, 0, 255);
+                            }
+                            else //if (Map[i, j] == Convert.ToString(99))
+                            {
+                                refrclr = newmap.GetPixel(i, j);
+                            }
+                    for (int k = 1; k < 5; k++)
+                    {
+                        for (int l = 1; l < 5; l++)
+                        {
+                            x = i;
+                            y = j;
+                            px.X = x;
+                            px.Y = y;
+                            p.Color = refrclr;
+                            //g.DrawLine(p, px, py);
+                            newmap.SetPixel(5 * i + l, 5 * j + k, refrclr);
+                            py = px;
+                            pb_Simulation.Image = newmap;
+
+                        }
+                    }
+
+                }
+            }
+            pb_Simulation.Refresh();
+            lbl_log6.Text += " donezo2";
+            lbl_log6.Text += Convert.ToString(Map[3, 4]);
+        }
+
+        public void Inquisition()
+        {
+            for (int i = 1; i < pb_Simulation.Width+1; i++)
+            {
+                for (int j = 1; j < pb_Simulation.Height+1; j++)
+                {
+                    if (i==1 && j==1)
+                    {
+                        if (Map[i, j] == "33")
+                        {
+                            if (Map[i + 1, j] != "33")
+                            {
+                                Progressor(i + 1, j, "33");
+                            }
+                            if (Map[i, j + 1] != "33") 
+                            {
+                                Progressor(i, j + 1, "33");
+                            }
+
+
+                        }
+                        if (Map[i, j] == "44")
+                        {
+
+                        }
+                        if (Map[i, j] == "55")
+                        {
+
+                        }
+                        if (Map[i, j] == "66")
+                        {
+
+                        }
+                        if (Map[i, j] == "77")
+                        {
+
+                        }
+                        if (Map[i, j] == "88")
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
+        public void Progressor(int X, int Y, string e) //ez valtoztatja a cellaertekeket
+        {
+            if (int.Parse(Map[X, Y]) > 0) 
+            {
+                Map[X, Y] = Convert.ToString(int.Parse(Map[X, Y]) - 1);
+            }
+            if (Map[X, Y] == "0")
+            {
+                Map[X, Y] = e;
+            }
         }
 
         /*private void tmr_paint_Tick(object sender, EventArgs e)
