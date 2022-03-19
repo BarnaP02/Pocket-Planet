@@ -52,6 +52,11 @@ namespace Pocket_Planet
         int ccount;
         Random rnd = new Random();
         Bitmap newmap;
+        int szamlalo = 0;
+        int mapwidth = 0;
+        int mapheight = 0;
+        bool van_szomszed = false;
+        bool border = false;
 
         private void tmr_Lup_Tick(object sender, EventArgs e)
         {
@@ -155,22 +160,22 @@ namespace Pocket_Planet
 
                 ////ez jo \/
                 
-                for (int i = 0; i < 1290; i++) // (int i = 0; i < 258; i++)
+                for (int i = 0; i < 258; i++) // (int i = 0; i < 1290; i++)
                 {
-                    for (int j = 0; j < 750; j++)  // (int j = 0; j < 150; j++)
+                    for (int j = 0; j < 150; j++) // (int j = 0; j < 750; j++)
                     {                        
-                        //for (int l = 0; l < 5; l++)
+                        for (int l = 0; l < 5; l++)
                         {
-                            //for (int k = 0; k < 5; k++)
+                            for (int k = 0; k < 5; k++)
                             {
-                                clr = newmap.GetPixel(i, j); // newmap.GetPixel(5 * i + l, 5 * j + k);
+                                clr = newmap.GetPixel(5 * i + l, 5 * j + k); // newmap.GetPixel(i, j);
                                 tValue += clr.R;
-                                Matrix[i, j] = clr.R; // Matrix[5 * i + l, 5 * j + k] = clr.R/25;
-                                Map[i, j] = Convert.ToString(clr.R/25); // Map[5 * i + l, 5 * j + k] = Convert.ToString(clr.R/25);
-                                int test = int.Parse(Map[i, j]); // int.Parse(Map[5 * i + l, 5 * j + k]);
+                                Matrix[5 * i + l, 5 * j + k] = clr.R/25; // Matrix[i, j] = clr.R;
+                                Map[5 * i + l, 5 * j + k] = Convert.ToString(clr.R/25); // Map[i, j] = Convert.ToString(clr.R/25);
+                                int test = int.Parse(Map[5 * i + l, 5 * j + k]); // int.Parse(Map[i, j]);
                                 if (test < 6)
                                 {
-                                    Map[i, j] = "-1"; // Map[5 * i + l, 5 * j + k] = "-1"; 
+                                    //Map[5 * i + l, 5 * j + k] = "-1"; //  Map[i, j] = "-1";
                                 }
                             }
                         }
@@ -326,7 +331,7 @@ namespace Pocket_Planet
                 {
                     cx = rnd.Next(1, 1291);
                     cy = rnd.Next(1, 750);
-                    Map[cx, cy] = Convert.ToString(i + 4) + Convert.ToString(i + 4);
+                    Map[cx - 1, cy - 1] = Convert.ToString(i + 2) + Convert.ToString(i + 2);
                     //checker += $"Map[{cx},{cy}]: {Map[cx, cy]} \t";
                     checker += $"{cx} ";
                 }
@@ -335,8 +340,56 @@ namespace Pocket_Planet
                 checker += $"Map[{cx},{cy}]: {Map[cx, cy]}";
                 lbl_log5.Text = checker;
                 lbl_log6.Text = $"Map[{3},{3}]: {Map[3, 3]}";
-                RefreshTheMap();
-                //RefreshTheMap2();
+                RefreshTheMap2();
+                //while (mapwidth*mapheight != ccount + szamlalo)
+                {
+
+                }
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                InquisitionE();
+                /*
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                Inquisition();
+                */
+                //RefreshTheMap();
+                RefreshTheMap2();
             }
         }
         public void RefreshTheMap() //csak a képet frissiti a terkep alapjan
@@ -405,6 +458,14 @@ namespace Pocket_Planet
                             {
                                 refrclr = Color.FromArgb(0, 0, 0);
                             }
+                            else if (Map[i, j] == "22")
+                            {
+                                refrclr = Color.FromArgb(243, 114, 32);
+                            }
+                            else if (Map[i, j] == "33")
+                            {
+                                refrclr = Color.FromArgb(149, 0, 255);
+                            }
                             else if (Map[i, j] == "44")
                             {
                                 refrclr = Color.FromArgb(255, 0, 0);
@@ -433,9 +494,9 @@ namespace Pocket_Planet
                             {
                                 refrclr = newmap.GetPixel(i, j);
                             }
-                    for (int k = 1; k < 5; k++)
+                    //for (int k = 1; k < 5; k++)
                     {
-                        for (int l = 1; l < 5; l++)
+                        //for (int l = 1; l < 5; l++)
                         {
                             x = i;
                             y = j;
@@ -443,7 +504,7 @@ namespace Pocket_Planet
                             px.Y = y;
                             p.Color = refrclr;
                             //g.DrawLine(p, px, py);
-                            newmap.SetPixel(5 * i + l, 5 * j + k, refrclr);
+                            newmap.SetPixel(i, j, refrclr);  //  newmap.SetPixel(5 * i + l, 5 * j + k, refrclr);
                             py = px;
                             pb_Simulation.Image = newmap;
 
@@ -459,59 +520,393 @@ namespace Pocket_Planet
 
         public void Inquisition()
         {
-            for (int i = 1; i < pb_Simulation.Width+1; i++)
+            for (int i = 1; i < pb_Simulation.Width + 1; i++)
             {
-                for (int j = 1; j < pb_Simulation.Height+1; j++)
+                for (int j = 1; j < pb_Simulation.Height + 1; j++)
                 {
-                    if (i==1 && j==1)
+                    if (i == 1 && j == 1) // bal felso
                     {
-                        if (Map[i, j] == "33")
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
                         {
-                            if (Map[i + 1, j] != "33")
+                            if (Map[i + 1, j] != Map[i, j])
                             {
-                                Progressor(i + 1, j, "33");
+                                Progressor(i, j, Map[i + 1, j]);
+                                van_szomszed = true;
                             }
-                            if (Map[i, j + 1] != "33") 
+                            if (Map[i, j + 1] != Map[i, j])
                             {
-                                Progressor(i, j + 1, "33");
+                                if (van_szomszed)
+                                {
+                                    border = true;
+                                }
+                                Progressor(i, j, Map[i, j + 1]);
                             }
-
-
-                        }
-                        if (Map[i, j] == "44")
-                        {
-
-                        }
-                        if (Map[i, j] == "55")
-                        {
-
-                        }
-                        if (Map[i, j] == "66")
-                        {
-
-                        }
-                        if (Map[i, j] == "77")
-                        {
-
-                        }
-                        if (Map[i, j] == "88")
-                        {
-
                         }
                     }
+                    if (i == pb_Simulation.Width - 1 && j == pb_Simulation.Height - 1) // jobb also
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (Map[i - 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i - 1, j]);
+                                van_szomszed = true;
+                            }
+                            if (Map[i, j - 1] != Map[i, j])
+                            {
+                                if (van_szomszed)
+                                {
+                                    border = true;
+                                }
+                                Progressor(i, j, Map[i, j - 1]);
+                            }
+                        }
+                    }
+                    if (i == pb_Simulation.Width - 1 && j == 1) // jobb felso
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (Map[i - 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i - 1, j]);
+                                van_szomszed = true;
+                            }
+                            if (Map[i, j + 1] != Map[i, j])
+                            {
+                                if (van_szomszed)
+                                {
+                                    border = true;
+                                }
+                                Progressor(i, j, Map[i, j + 1]);
+                            }
+                        }
+                    }
+                    if (i == 1 && j == pb_Simulation.Height - 1) // bal also
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (Map[i + 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i + 1, j]);
+                                van_szomszed = true;
+                            }
+                            if (Map[i, j - 1] != Map[i, j])
+                            {
+                                if (van_szomszed)
+                                {
+                                    border = true;
+                                }
+                                Progressor(i, j, Map[i, j - 1]);
+                            }
+                        }
+                    }
+                    if (i == 1 && j > 1 && j < pb_Simulation.Height - 1) // bal fal
+                    {
+                        if (Map[i + 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i + 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i, j + 1] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i, j + 1]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i, j - 1] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i, j - 1]);
+                        }
+                    }
+                    if (i == 1 && j > 1 && j < pb_Simulation.Height - 1) // jobb fal
+                    {
+                        if (Map[i - 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i, j + 1] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i, j + 1]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i, j - 1] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i, j - 1]);
+                        }
+                    }
+                    if (i > 1 && i < pb_Simulation.Width - 1 && j == 1)   // felso fal
+                    {
+                        if (Map[i - 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i, j + 1] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i, j + 1]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i + 1, j] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i + 1, j]);
+                        }
+                    }
+                    if (i > 1 && i < pb_Simulation.Width - 1 && j == pb_Simulation.Height - 1) // also fal
+                    {
+                        if (Map[i - 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i, j - 1] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i, j - 1]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i + 1, j] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i + 1, j]);
+                        }
+                    }
+                    if (i > 1 && i < pb_Simulation.Width - 1 && j > 1 && j < pb_Simulation.Height - 1) // maradek
+                    {
+                        if (Map[i - 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i, j - 1] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i, j - 1]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i + 1, j] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i + 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (Map[i, j + 1] != Map[i, j])
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i, j + 1]);
+                        }
+                    }
+                    if (border)
+                    {
+                        Map[i, j] = "-1";
+                    }
+                    van_szomszed = false;
+                    border = false;
+                }
+            }
+        }
+        public void InquisitionE()
+        {
+            for (int i = 1; i < pb_Simulation.Width + 1; i++)
+            {
+                for (int j = 1; j < pb_Simulation.Height + 1; j++)
+                {
+                    if (i == 1 && j == 1) // bal felso
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (Map[i + 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i + 1, j]);
+                            }
+                            if (Map[i, j + 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j + 1]);
+                            }
+                        }
+                    }
+                    if (i == pb_Simulation.Width - 1 && j == pb_Simulation.Height - 1) // jobb also
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (Map[i - 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i - 1, j]);
+                            }
+                            if (Map[i, j - 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j - 1]);
+                            }
+                        }
+                    }
+                    if (i == pb_Simulation.Width - 1 && j == 1) // jobb felso
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (Map[i - 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i - 1, j]);
+                            }
+                            if (Map[i, j + 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j + 1]);
+                            }
+                        }
+                    }
+                    if (i == 1 && j == pb_Simulation.Height - 1) // bal also
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (Map[i + 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i + 1, j]);
+                            }
+                            if (Map[i, j - 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j - 1]);
+                            }
+                        }
+                    }
+                    if (i == 1 && j > 1 && j < pb_Simulation.Height - 1) // bal fal
+                    {
+                        if (Map[i + 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i + 1, j]);
+                        }
+                        if (Map[i, j + 1] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i, j + 1]);
+                        }
+                        if (Map[i, j - 1] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i, j - 1]);
+                        }
+                    }
+                    if (i == 1 && j > 1 && j < pb_Simulation.Height - 1) // jobb fal
+                    {
+                        if (Map[i - 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                        }
+                        if (Map[i, j + 1] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i, j + 1]);
+                        }
+                        if (Map[i, j - 1] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i, j - 1]);
+                        }
+                    }
+                    if (i > 1 && i < pb_Simulation.Width - 1 && j == 1)   // felso fal
+                    {
+                        if (Map[i - 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                        }
+                        if (Map[i, j + 1] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i, j + 1]);
+                        }
+                        if (Map[i + 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i + 1, j]);
+                        }
+                    }
+                    if (i > 1 && i < pb_Simulation.Width - 1 && j == pb_Simulation.Height - 1) // also fal
+                    {
+                        if (Map[i - 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                        }
+                        if (Map[i, j - 1] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i, j - 1]);
+                        }
+                        if (Map[i + 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i + 1, j]);
+                        }
+                    }
+                    if (i > 1 && i < pb_Simulation.Width - 1 && j > 1 && j < pb_Simulation.Height - 1) // maradek
+                    {
+                        if (Map[i - 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                        }
+                        if (Map[i, j - 1] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i, j - 1]);
+                        }
+                        if (Map[i + 1, j] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i + 1, j]);
+                        }
+                        if (Map[i, j + 1] != Map[i, j])
+                        {
+                            Progressor(i, j, Map[i, j + 1]);
+                        }
+                    }
+                    /*
+                    if (border)
+                    {
+                        Map[i, j] = "-1";
+                    }
+                    */
+                    van_szomszed = false;
+                    border = false;
                 }
             }
         }
         public void Progressor(int X, int Y, string e) //ez valtoztatja a cellaertekeket
         {
-            if (int.Parse(Map[X, Y]) > 0) 
+            if (int.Parse(Map[X, Y]) > 0 && int.Parse(Map[X, Y]) < 11) 
             {
                 Map[X, Y] = Convert.ToString(int.Parse(Map[X, Y]) - 1);
             }
             if (Map[X, Y] == "0")
             {
                 Map[X, Y] = e;
+                szamlalo++;
             }
+
         }
 
         /*private void tmr_paint_Tick(object sender, EventArgs e)
