@@ -53,10 +53,14 @@ namespace Pocket_Planet
         Random rnd = new Random();
         Bitmap newmap;
         int szamlalo = 0;
-        int mapwidth = 0;
-        int mapheight = 0;
+        int mapwidth = 1290;
+        int mapheight = 750;
         bool van_szomszed = false;
         bool border = false;
+        string ProgressCol = "0";
+        bool converted = false;
+        int lefutott = 0;
+        int szamlaloossz = 0;
 
         private void tmr_Lup_Tick(object sender, EventArgs e)
         {
@@ -130,6 +134,7 @@ namespace Pocket_Planet
                 Color newclr;
                 int grey=0;
                 tmr_Lup.Stop();
+                szamlaloossz = ccount;
                 /*
                 for (int i = 0; i < 43; i++)
                 {
@@ -335,16 +340,35 @@ namespace Pocket_Planet
                     //checker += $"Map[{cx},{cy}]: {Map[cx, cy]} \t";
                     checker += $"{cx} ";
                 }
+                for (int i = 0; i < ccount; i++)
+                {
+                    cx = rnd.Next(1, 1291);
+                    cy = rnd.Next(1, 750);
+                    Map[cx - 1, cy - 1] = Convert.ToString(i + 2) + Convert.ToString(i + 2);
+                    //checker += $"Map[{cx},{cy}]: {Map[cx, cy]} \t";
+                    checker += $"{cx} ";
+                }
                 lbl_log4.Text = "W " + Convert.ToString(pb_Simulation.Width);
                 lbl_log5.Text = "H " + Convert.ToString(pb_Simulation.Height);
                 checker += $"Map[{cx},{cy}]: {Map[cx, cy]}";
                 lbl_log5.Text = checker;
                 lbl_log6.Text = $"Map[{3},{3}]: {Map[3, 3]}";
                 RefreshTheMap2();
-                //while (mapwidth*mapheight != ccount + szamlalo)
+                for (int p = 0; p < 400; p++) //100 biztos elég egy sötétebb képpel sok országgal de egy világos képen 3 országgal lehet hogy az 1000 is kevés
                 {
-
+                    //while (mapwidth*mapheight - ccount > szamlaloossz)
+                    {
+                        lefutott++;
+                        InquisitionE();
+                    }
+                    if (lefutott % 10 == 0) 
+                    {
+                        RefreshTheMap2();
+                    }
                 }
+                lbl_log6.Text = $"w*h: {mapwidth * mapheight}, sz: {ccount + szamlalo}";
+                lbl_log4.Text = $"lefutott: {lefutott}";
+                /*
                 InquisitionE();
                 InquisitionE();
                 InquisitionE();
@@ -368,6 +392,7 @@ namespace Pocket_Planet
                 InquisitionE();
                 InquisitionE();
                 InquisitionE();
+                */
                 /*
                 Inquisition();
                 Inquisition();
@@ -387,6 +412,69 @@ namespace Pocket_Planet
                 Inquisition();
                 Inquisition();
                 Inquisition();
+                */
+                /*
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                InquisitionU();
+                */
+                /*
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
+                InquisitionV();
                 */
                 //RefreshTheMap();
                 RefreshTheMap2();
@@ -702,18 +790,18 @@ namespace Pocket_Planet
                     }
                     if (i > 1 && i < pb_Simulation.Width - 1 && j > 1 && j < pb_Simulation.Height - 1) // maradek
                     {
-                        if (Map[i - 1, j] != Map[i, j])
+                        if (Map[i, j - 1] != Map[i, j])
                         {
-                            Progressor(i, j, Map[i - 1, j]);
+                            Progressor(i, j, Map[i, j - 1]);
                             van_szomszed = true;
                         }
-                        if (Map[i, j - 1] != Map[i, j])
+                        if (Map[i - 1, j] != Map[i, j])
                         {
                             if (van_szomszed)
                             {
                                 border = true;
                             }
-                            Progressor(i, j, Map[i, j - 1]);
+                            Progressor(i, j, Map[i - 1, j]);
                             van_szomszed = true;
                         }
                         if (Map[i + 1, j] != Map[i, j])
@@ -745,6 +833,169 @@ namespace Pocket_Planet
         }
         public void InquisitionE()
         {
+            szamlalo = 0;
+            for (int i = 0; i < pb_Simulation.Width; i++)
+            {
+                for (int j = 0; j < pb_Simulation.Height; j++)
+                {
+                    if (int.Parse(Map[i, j])< 11)
+                    {
+                        converted = false;
+                        ProgressCol = "";
+                        if (i == 1 && j == 1) // bal felso
+                        {
+                            if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                            {
+                                if (Map[i + 1, j] != Map[i, j])
+                                {
+                                    Progressor(i, j, Map[i + 1, j]);
+                                }
+                                if (Map[i, j + 1] != Map[i, j])
+                                {
+                                    Progressor(i, j, Map[i, j + 1]);
+                                }
+                            }
+                        }
+                        else if (i == pb_Simulation.Width - 1 && j == pb_Simulation.Height - 1) // jobb also
+                        {
+                            if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                            {
+                                if (Map[i - 1, j] != Map[i, j])
+                                {
+                                    Progressor(i, j, Map[i - 1, j]);
+                                }
+                                if (Map[i, j - 1] != Map[i, j])
+                                {
+                                    Progressor(i, j, Map[i, j - 1]);
+                                }
+                            }
+                        }
+                        else if (i == pb_Simulation.Width - 1 && j == 1) // jobb felso
+                        {
+                            if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                            {
+                                if (Map[i - 1, j] != Map[i, j])
+                                {
+                                    Progressor(i, j, Map[i - 1, j]);
+                                }
+                                if (Map[i, j + 1] != Map[i, j])
+                                {
+                                    Progressor(i, j, Map[i, j + 1]);
+                                }
+                            }
+                        }
+                        else if (i == 1 && j == pb_Simulation.Height - 1) // bal also
+                        {
+                            if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                            {
+                                if (Map[i + 1, j] != Map[i, j])
+                                {
+                                    Progressor(i, j, Map[i + 1, j]);
+                                }
+                                if (Map[i, j - 1] != Map[i, j])
+                                {
+                                    Progressor(i, j, Map[i, j - 1]);
+                                }
+                            }
+                        }
+                        else if (i == 1 && j > 1 && j < pb_Simulation.Height - 1) // bal fal
+                        {
+                            if (Map[i + 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i + 1, j]);
+                            }
+                            if (Map[i, j + 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j + 1]);
+                            }
+                            if (Map[i, j - 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j - 1]);
+                            }
+                        }
+                        else if (i == 1 && j > 1 && j < pb_Simulation.Height - 1) // jobb fal
+                        {
+                            if (Map[i - 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i - 1, j]);
+                            }
+                            if (Map[i, j + 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j + 1]);
+                            }
+                            if (Map[i, j - 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j - 1]);
+                            }
+                        }
+                        else if (i > 1 && i < pb_Simulation.Width - 1 && j == 1)   // felso fal
+                        {
+                            if (Map[i - 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i - 1, j]);
+                            }
+                            if (Map[i, j + 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j + 1]);
+                            }
+                            if (Map[i + 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i + 1, j]);
+                            }
+                        }
+                        else if (i > 1 && i < pb_Simulation.Width - 1 && j == pb_Simulation.Height - 1) // also fal
+                        {
+                            if (Map[i - 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i - 1, j]);
+                            }
+                            if (Map[i, j - 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j - 1]);
+                            }
+                            if (Map[i + 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i + 1, j]);
+                            }
+                        }
+                        else if (i > 1 && i < pb_Simulation.Width - 1 && j > 1 && j < pb_Simulation.Height - 1) // maradek
+                        {
+                            if (Map[i - 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i - 1, j]);
+                            }
+                            if (Map[i, j - 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j - 1]);
+                            }
+                            if (Map[i + 1, j] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i + 1, j]);
+                            }
+                            if (Map[i, j + 1] != Map[i, j])
+                            {
+                                Progressor(i, j, Map[i, j + 1]);
+                            }
+                        }
+                    if (converted)
+                    {
+                        szamlalo++;
+                    }
+                    van_szomszed = false;
+                    border = false;
+                    }
+                    /*
+                    if (border)
+                    {
+                        Map[i, j] = "-1";
+                    }
+                    */
+                }
+            }
+            szamlaloossz += szamlalo;
+        }
+        public void InquisitionU()
+        {
             for (int i = 1; i < pb_Simulation.Width + 1; i++)
             {
                 for (int j = 1; j < pb_Simulation.Height + 1; j++)
@@ -753,12 +1004,17 @@ namespace Pocket_Planet
                     {
                         if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
                         {
-                            if (Map[i + 1, j] != Map[i, j])
+                            if (int.Parse(Map[i + 1, j]) > 10)
                             {
                                 Progressor(i, j, Map[i + 1, j]);
+                                van_szomszed = true;
                             }
-                            if (Map[i, j + 1] != Map[i, j])
+                            if (int.Parse(Map[i, j + 1]) > 10)
                             {
+                                if (van_szomszed)
+                                {
+                                    border = true;
+                                }
                                 Progressor(i, j, Map[i, j + 1]);
                             }
                         }
@@ -767,12 +1023,17 @@ namespace Pocket_Planet
                     {
                         if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
                         {
-                            if (Map[i - 1, j] != Map[i, j])
+                            if (int.Parse(Map[i - 1, j]) > 10)
                             {
                                 Progressor(i, j, Map[i - 1, j]);
+                                van_szomszed = true;
                             }
-                            if (Map[i, j - 1] != Map[i, j])
+                            if (int.Parse(Map[i, j - 1]) > 10)
                             {
+                                if (van_szomszed)
+                                {
+                                    border = true;
+                                }
                                 Progressor(i, j, Map[i, j - 1]);
                             }
                         }
@@ -781,12 +1042,17 @@ namespace Pocket_Planet
                     {
                         if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
                         {
-                            if (Map[i - 1, j] != Map[i, j])
+                            if (int.Parse(Map[i - 1, j]) > 10)
                             {
                                 Progressor(i, j, Map[i - 1, j]);
+                                van_szomszed = true;
                             }
-                            if (Map[i, j + 1] != Map[i, j])
+                            if (int.Parse(Map[i, j + 1]) > 10)
                             {
+                                if (van_szomszed)
+                                {
+                                    border = true;
+                                }
                                 Progressor(i, j, Map[i, j + 1]);
                             }
                         }
@@ -795,101 +1061,390 @@ namespace Pocket_Planet
                     {
                         if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
                         {
-                            if (Map[i + 1, j] != Map[i, j])
+                            if (int.Parse(Map[i + 1, j]) > 10)
                             {
                                 Progressor(i, j, Map[i + 1, j]);
+                                van_szomszed = true;
                             }
-                            if (Map[i, j - 1] != Map[i, j])
+                            if (int.Parse(Map[i, j - 1]) > 10)
                             {
+                                if (van_szomszed)
+                                {
+                                    border = true;
+                                }
                                 Progressor(i, j, Map[i, j - 1]);
                             }
                         }
                     }
                     if (i == 1 && j > 1 && j < pb_Simulation.Height - 1) // bal fal
                     {
-                        if (Map[i + 1, j] != Map[i, j])
+                        if (int.Parse(Map[i + 1, j]) > 10)
                         {
                             Progressor(i, j, Map[i + 1, j]);
+                            van_szomszed = true;
                         }
-                        if (Map[i, j + 1] != Map[i, j])
+                        if (int.Parse(Map[i, j + 1]) > 10)
                         {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
                             Progressor(i, j, Map[i, j + 1]);
+                            van_szomszed = true;
                         }
-                        if (Map[i, j - 1] != Map[i, j])
+                        if (int.Parse(Map[i, j - 1]) > 10)
                         {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
                             Progressor(i, j, Map[i, j - 1]);
                         }
                     }
                     if (i == 1 && j > 1 && j < pb_Simulation.Height - 1) // jobb fal
                     {
-                        if (Map[i - 1, j] != Map[i, j])
+                        if (int.Parse(Map[i - 1, j]) > 10)
                         {
                             Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
                         }
-                        if (Map[i, j + 1] != Map[i, j])
+                        if (int.Parse(Map[i, j + 1]) > 10)
                         {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
                             Progressor(i, j, Map[i, j + 1]);
+                            van_szomszed = true;
                         }
-                        if (Map[i, j - 1] != Map[i, j])
+                        if (int.Parse(Map[i, j - 1]) > 10)
                         {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
                             Progressor(i, j, Map[i, j - 1]);
                         }
                     }
                     if (i > 1 && i < pb_Simulation.Width - 1 && j == 1)   // felso fal
                     {
-                        if (Map[i - 1, j] != Map[i, j])
+                        if (int.Parse(Map[i - 1, j]) > 10)
                         {
                             Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
                         }
-                        if (Map[i, j + 1] != Map[i, j])
+                        if (int.Parse(Map[i, j + 1]) > 10)
                         {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
                             Progressor(i, j, Map[i, j + 1]);
+                            van_szomszed = true;
                         }
-                        if (Map[i + 1, j] != Map[i, j])
+                        if (int.Parse(Map[i + 1, j]) > 10)
                         {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
                             Progressor(i, j, Map[i + 1, j]);
                         }
                     }
                     if (i > 1 && i < pb_Simulation.Width - 1 && j == pb_Simulation.Height - 1) // also fal
                     {
-                        if (Map[i - 1, j] != Map[i, j])
+                        if (int.Parse(Map[i - 1, j]) > 10)
                         {
                             Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
                         }
-                        if (Map[i, j - 1] != Map[i, j])
+                        if (int.Parse(Map[i + 1, j]) > 10)
                         {
-                            Progressor(i, j, Map[i, j - 1]);
-                        }
-                        if (Map[i + 1, j] != Map[i, j])
-                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
                             Progressor(i, j, Map[i + 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i, j - 1]) > 10)
+                        {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
+                            Progressor(i, j, Map[i, j - 1]);
                         }
                     }
                     if (i > 1 && i < pb_Simulation.Width - 1 && j > 1 && j < pb_Simulation.Height - 1) // maradek
                     {
-                        if (Map[i - 1, j] != Map[i, j])
+                        if (int.Parse(Map[i - 1, j]) > 10)
                         {
                             Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
                         }
-                        if (Map[i, j - 1] != Map[i, j])
+                        if (int.Parse(Map[i, j - 1]) > 10)
                         {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
                             Progressor(i, j, Map[i, j - 1]);
+                            van_szomszed = true;
                         }
-                        if (Map[i + 1, j] != Map[i, j])
+                        if (int.Parse(Map[i + 1, j]) > 10)
                         {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
                             Progressor(i, j, Map[i + 1, j]);
+                            van_szomszed = true;
                         }
-                        if (Map[i, j + 1] != Map[i, j])
+                        if (int.Parse(Map[i, j + 1]) > 10)
                         {
+                            if (van_szomszed)
+                            {
+                                border = true;
+                            }
                             Progressor(i, j, Map[i, j + 1]);
                         }
                     }
-                    /*
                     if (border)
                     {
                         Map[i, j] = "-1";
                     }
-                    */
+                    van_szomszed = false;
+                    border = false;
+                }
+            }
+        }
+        public void InquisitionV()
+        {
+            ProgressCol = "";
+            for (int i = 1; i < pb_Simulation.Width + 1; i++)
+            {
+                for (int j = 1; j < pb_Simulation.Height + 1; j++)
+                {
+                    if (i == 1 && j == 1) // bal felso
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (int.Parse(Map[i + 1, j]) > 10)
+                            {
+                                Progressor(i, j, Map[i + 1, j]);
+                                van_szomszed = true;
+                            }
+                            if (int.Parse(Map[i, j + 1]) > 10)
+                            {
+                                Progressor(i, j, Map[i, j + 1]);
+                                if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                                {
+                                    border = true;
+                                }
+                            }
+                        }
+                    }
+                    else if (i == pb_Simulation.Width - 1 && j == pb_Simulation.Height - 1) // jobb also
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (int.Parse(Map[i - 1, j]) > 10)
+                            {
+                                Progressor(i, j, Map[i - 1, j]);
+                                van_szomszed = true;
+                            }
+                            if (int.Parse(Map[i, j - 1]) > 10)
+                            {
+                                Progressor(i, j, Map[i, j - 1]);
+                                if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                                {
+                                    border = true;
+                                }
+                            }
+                        }
+                    }
+                    else if (i == pb_Simulation.Width - 1 && j == 1) // jobb felso
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (int.Parse(Map[i - 1, j]) > 10)
+                            {
+                                Progressor(i, j, Map[i - 1, j]);
+                                van_szomszed = true;
+                            }
+                            if (int.Parse(Map[i, j + 1]) > 10)
+                            {
+                                Progressor(i, j, Map[i, j + 1]);
+                                if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                                {
+                                    border = true;
+                                }
+                            }
+                        }
+                    }
+                    else if (i == 1 && j == pb_Simulation.Height - 1) // bal also
+                    {
+                        if (int.Parse(Map[i, j]) > -1 && int.Parse(Map[i, j]) < 11)
+                        {
+                            if (int.Parse(Map[i + 1, j]) > 10)
+                            {
+                                Progressor(i, j, Map[i + 1, j]);
+                                van_szomszed = true;
+                            }
+                            if (int.Parse(Map[i, j - 1]) > 10)
+                            {
+                                Progressor(i, j, Map[i, j - 1]);
+                                if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                                {
+                                    border = true;
+                                }
+                            }
+                        }
+                    }
+                    else if (i == 1 && j > 1 && j < pb_Simulation.Height - 1) // bal fal
+                    {
+                        if (int.Parse(Map[i + 1, j]) > 10)
+                        {
+                            Progressor(i, j, Map[i + 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i, j + 1]) > 10)
+                        {
+                            Progressor(i, j, Map[i, j + 1]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i, j - 1]) > 10)
+                        {
+                            Progressor(i, j, Map[i, j - 1]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                        }
+                    }
+                    else if (i == 1 && j > 1 && j < pb_Simulation.Height - 1) // jobb fal
+                    {
+                        if (int.Parse(Map[i - 1, j]) > 10)
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i, j + 1]) > 10)
+                        {
+                            Progressor(i, j, Map[i, j + 1]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i, j - 1]) > 10)
+                        {
+                            Progressor(i, j, Map[i, j - 1]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                        }
+                    }
+                    else if (i > 1 && i < pb_Simulation.Width - 1 && j == 1)   // felso fal
+                    {
+                        if (int.Parse(Map[i - 1, j]) > 10)
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i, j + 1]) > 10)
+                        {
+                            Progressor(i, j, Map[i, j + 1]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i + 1, j]) > 10)
+                        {
+                            Progressor(i, j, Map[i + 1, j]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                        }
+                    }
+                    else if (i > 1 && i < pb_Simulation.Width - 1 && j == pb_Simulation.Height - 1) // also fal
+                    {
+                        if (int.Parse(Map[i - 1, j]) > 10)
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i + 1, j]) > 10)
+                        {
+                            Progressor(i, j, Map[i + 1, j]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i, j - 1]) > 10)
+                        {
+                            Progressor(i, j, Map[i, j - 1]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                        }
+                    }
+                    else if (i > 1 && i < pb_Simulation.Width - 1 && j > 1 && j < pb_Simulation.Height - 1) // maradek
+                    {
+                        if (int.Parse(Map[i - 1, j]) > 10)
+                        {
+                            Progressor(i, j, Map[i - 1, j]);
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i, j - 1]) > 10)
+                        {
+                            Progressor(i, j, Map[i, j - 1]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i + 1, j]) > 10)
+                        {
+                            Progressor(i, j, Map[i + 1, j]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                            van_szomszed = true;
+                        }
+                        if (int.Parse(Map[i, j + 1]) > 10)
+                        {
+                            Progressor(i, j, Map[i, j + 1]);
+                            if (van_szomszed && ProgressCol != Map[i, j] && ProgressCol != "-1")
+                            {
+                                border = true;
+                            }
+                        }
+                    }
+                    if (border)
+                    {
+                        Map[i, j] = "-1";
+                        szamlalo++;
+                    }
+                    else if (converted)
+                    {
+                        szamlalo++;
+                    }
                     van_szomszed = false;
                     border = false;
                 }
@@ -900,11 +1455,17 @@ namespace Pocket_Planet
             if (int.Parse(Map[X, Y]) > 0 && int.Parse(Map[X, Y]) < 11) 
             {
                 Map[X, Y] = Convert.ToString(int.Parse(Map[X, Y]) - 1);
+                ProgressCol = "";
             }
             if (Map[X, Y] == "0")
             {
                 Map[X, Y] = e;
-                szamlalo++;
+                converted = true;
+                ProgressCol = Map[X, Y];
+            }
+            else
+            {
+                converted = false;
             }
 
         }
